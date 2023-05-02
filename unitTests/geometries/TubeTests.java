@@ -34,4 +34,7 @@ class TubeTests {
                 "The ray of the tube is orthogonal to (P - P0)");
     }
 
+    @Test
+    void testFindIntersections() {
+    }
 }

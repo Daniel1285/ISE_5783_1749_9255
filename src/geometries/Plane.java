@@ -3,10 +3,9 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
+import static primitives.Util.*;
 import java.util.List;
 
-import static primitives.Util.isZero;
 
 /**
 
@@ -73,6 +72,34 @@ public class Plane implements Geometry {
         return normal;
     }
 
-    public List<Point> findIntersections(Ray ray){return null;}
+    public List<Point> findIntersections(Ray ray){
+        Point P0 = ray.getP0();
+        Vector v = ray.getDir();
+        Vector n = normal;
+
+        double nv = alignZero(n.dotProduct(v));
+        // ray found in the plane
+        if (isZero(nv)) {
+            return null;
+        }
+        // The starting point of the ray is equal to the reference point
+        if (p0.equals(P0)) {
+            return null;
+        }
+        Vector P0_Q0 = p0.subtract(P0);
+
+        double nP0Q0 = alignZero(n.dotProduct(P0_Q0));
+        // ray parallel to the plane
+        if (isZero(nP0Q0)) {
+            return null;
+        }
+
+        double t = alignZero(nP0Q0 / nv);
+
+        if(t < 0 ){
+            return null;
+        }
+        return List.of(ray.getPoint(t));
+    }
 
 }
