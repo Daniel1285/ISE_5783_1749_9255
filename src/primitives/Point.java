@@ -108,4 +108,13 @@ public class Point {
     public double distance(Point point2) {
         return Math.sqrt(distanceSquared(point2));
     }
+    public double getX(){
+        return xyz.d1;
+    }
+    public double getY(){
+        return xyz.d2;
+    }
+    public double getZ(){
+        return xyz.d3;
+    }
 }

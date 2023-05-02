@@ -6,7 +6,7 @@ import primitives.Vector;
 /**
  * Interface for geometries that can be intersected with rays and have a normal vector.
  */
-public interface Geometry {
+public interface Geometry extends Intersectable {
 
     /**
      * Calculates the normal vector of a geometry at a given point.

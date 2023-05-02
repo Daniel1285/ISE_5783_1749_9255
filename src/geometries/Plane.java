@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 import static primitives.Util.isZero;
 
@@ -25,9 +28,11 @@ public class Plane implements Geometry {
     public Plane(Point p0, Vector normal) {
         this.p0 = p0;
         if (!isZero(normal.length() - 1d)) { // if the vector is not normalized
-            normal.normalize();
+            this.normal = normal.normalize();
         }
-        this.normal = normal;
+        else{
+            this.normal = normal;
+        }
     }
 
     /**
@@ -67,5 +72,7 @@ public class Plane implements Geometry {
     public Vector getNormal(Point point) {
         return normal;
     }
+
+    public List<Point> findIntersections(Ray ray){return null;}
 
 }

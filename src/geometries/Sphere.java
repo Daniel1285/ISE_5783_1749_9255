@@ -1,7 +1,11 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+import static primitives.Util.*;
+import java.util.List;
+import java.util.ArrayList;
 /**
 
  The Sphere class represents a sphere in a 3D Cartesian coordinate system.
@@ -44,5 +48,35 @@ public class Sphere extends RadialGeometry {
     public Vector getNormal(Point point) {
         Vector v = point.subtract(center);
         return v.normalize();
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        double tm = 0, d = 0;
+        if(!this.center.equals(ray.getP0())) {
+            var u = this.center.subtract(ray.getP0());
+            tm = ray.getDir().dotProduct(u);
+            d = Math.sqrt(u.dotProduct(u) - tm*tm);
+        }
+
+        if(d >= this.radius){
+            return null;
+        }
+        double th = Math.sqrt(this.radius* this.radius - d * d);
+        double t1 = tm + th;
+        double t2 = tm - th;
+
+
+        if(t1 > 0 && t2 > 0 ){
+            return List.of(ray.getPoint(t1),ray.getPoint(t2));
+        }
+
+        if(t2 > 0 && t1 <=0){
+            return List.of(ray.getPoint(t2));
+        }
+        if(t1 > 0 && t2 <=0){
+            return List.of(ray.getPoint(t1));
+        }
+        return null;
     }
 }
