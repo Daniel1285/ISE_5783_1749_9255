@@ -52,11 +52,11 @@ public class Sphere extends RadialGeometry {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-        double tm = 0, d = 0;
+        double tm = 0 , d = 0 ;
         if(!this.center.equals(ray.getP0())) {
             var u = this.center.subtract(ray.getP0());
             tm = ray.getDir().dotProduct(u);
-            d = Math.sqrt(u.dotProduct(u) - tm*tm);
+            d = Math.sqrt(u.dotProduct(u) - tm * tm);
         }
 
         if(d >= this.radius){
