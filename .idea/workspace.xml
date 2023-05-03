@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3f1481a-1dfe-4521-8802-b827f5263425" name="Changes" comment="begin in pro3">
-      <change afterPath="$PROJECT_DIR$/unitTests/primitives/RayTests.java" afterDir="false" />
+    <list default="true" id="d3f1481a-1dfe-4521-8802-b827f5263425" name="Changes" comment="advanced in PR03">
+      <change afterPath="$PROJECT_DIR$/src/renderer/Camera.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unitTests/renderer/CameraTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/Sphere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/Sphere.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/geometries/GeometriesTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/GeometriesTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unitTests/geometries/SphereTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/geometries/SphereTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +17,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -45,30 +42,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Downloaded.Files.Path.Enabled": "true",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "last_opened_file_path": "C:/Users/Daniel/IdeaProjects/ISE_5783_1749_9255/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Daniel/IdeaProjects/ISE_5783_1749_9255/src&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;fileTemplates&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Daniel\IdeaProjects\ISE_5783_1749_9255\src" />
@@ -79,15 +76,13 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Daniel\IdeaProjects\ISE_5783_1749_9255\unitTests" />
     </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="" />
-    </key>
     <key name="CreateTestDialog.RecentsKey">
-      <recent name="primitives" />
+      <recent name="renderer" />
       <recent name="geometries" />
+      <recent name="primitives" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in ISE_5783_1749_9255">
+  <component name="RunManager" selected="JUnit.CameraTests">
     <configuration name="All in ISE_5783_1749_9255" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE_5783_1749_9255" />
       <option name="PACKAGE_NAME" value="" />
@@ -96,33 +91,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GeometriesTests.testFindIntersections" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ISE_5783_1749_9255" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="GeometriesTests" />
-      <option name="METHOD_NAME" value="testFindIntersections" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RayTests.testGetPoint" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CameraTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE_5783_1749_9255" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="primitives.*" />
+          <option name="PATTERN" value="renderer.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="primitives" />
-      <option name="MAIN_CLASS_NAME" value="primitives.RayTests" />
-      <option name="METHOD_NAME" value="testGetPoint" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="renderer" />
+      <option name="MAIN_CLASS_NAME" value="renderer.CameraTests" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SphereTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PlaneTests.testFindIntersections" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE_5783_1749_9255" />
       <extension name="coverage">
         <pattern>
@@ -131,22 +115,38 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="geometries" />
-      <option name="MAIN_CLASS_NAME" value="geometries.SphereTests" />
+      <option name="MAIN_CLASS_NAME" value="geometries.PlaneTests" />
+      <option name="METHOD_NAME" value="testFindIntersections" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PointTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ISE_5783_1749_9255" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="primitives.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="primitives" />
+      <option name="MAIN_CLASS_NAME" value="primitives.PointTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SphereTests.testFindIntersections" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TriangleTests.testFindIntersections" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE_5783_1749_9255" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value=".*" />
+          <option name="PATTERN" value="geometries.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="geometries" />
-      <option name="MAIN_CLASS_NAME" value="geometries.SphereTests" />
+      <option name="MAIN_CLASS_NAME" value="geometries.TriangleTests" />
       <option name="METHOD_NAME" value="testFindIntersections" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -155,11 +155,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CameraTests" />
         <item itemvalue="JUnit.All in ISE_5783_1749_9255" />
-        <item itemvalue="JUnit.SphereTests" />
-        <item itemvalue="JUnit.SphereTests.testFindIntersections" />
-        <item itemvalue="JUnit.RayTests.testGetPoint" />
-        <item itemvalue="JUnit.GeometriesTests.testFindIntersections" />
+        <item itemvalue="JUnit.TriangleTests.testFindIntersections" />
+        <item itemvalue="JUnit.PlaneTests.testFindIntersections" />
+        <item itemvalue="JUnit.PointTests" />
       </list>
     </recent_temporary>
   </component>
@@ -172,8 +172,7 @@
       <option name="presentableId" value="Default" />
       <updated>1682948903677</updated>
       <workItem from="1682948904608" duration="521000" />
-      <workItem from="1682950690315" duration="5675000" />
-      <workItem from="1682961174173" duration="8263000" />
+      <workItem from="1683130854838" duration="2020000" />
     </task>
     <task id="LOCAL‎-00001" summary="hakol tov">
       <created>1682949297210</created>
@@ -182,7 +181,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1682949297210</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL‎-00002" summary="advanced in PR03">
+      <created>1683043229633</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL‎-00002" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1683043229633</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,6 +208,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="hakol tov" />
-    <option name="LAST_COMMIT_MESSAGE" value="hakol tov" />
+    <MESSAGE value="advanced in PR03" />
+    <option name="LAST_COMMIT_MESSAGE" value="advanced in PR03" />
   </component>
 </project>
