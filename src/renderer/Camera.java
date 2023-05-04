@@ -4,6 +4,7 @@ import primitives.Point;
 import primitives.Vector;
 import primitives.Ray;
 import static primitives.Util.*;
+import static primitives.Double3.*;
 
 public class Camera {
     private Point p0;
@@ -46,7 +47,17 @@ public class Camera {
         return this;
     }
     public Ray constructRay(int nX, int nY, int j, int i){
-        return null;
+        Point pc = this.p0.add(this.vTo.scale(this.distance));
+        double ry = this.height / nY;
+        double rx = this.width / nX;
+        double yi = (i - (nY - 1) / 2d) * ry;
+        double xj = (j - (nX - 1) / 2d) * rx;
+        Point pIj = pc;
+        if (xj != 0)
+            pIj = pIj.add(vRight.scale(xj));
+        if (yi != 0)
+            pIj = pIj.add(vUp.scale(-yi));
+        return new Ray(this.p0,pIj.subtract(p0));
     }
 
 

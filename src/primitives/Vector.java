@@ -30,7 +30,7 @@ public class Vector extends Point {
      * @param xyz The Double3 object that represents the vector.
      * @throws IllegalArgumentException If the vector (0,0,0) is created.
      */
-    Vector(Double3 xyz) {
+    public Vector(Double3 xyz) {
         super(xyz);
         if (this.xyz.equals(Double3.ZERO)) {
             throw new IllegalArgumentException("vector (0,0,0) isn't allowed!");
