@@ -3,8 +3,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import geometries.*;
 import primitives.*;
-
-import java.util.LinkedList;
 import java.util.List;
 public class CameraIntegrationTest {
 
@@ -13,8 +11,6 @@ public class CameraIntegrationTest {
         cam.setVPDistance(1);
         int nX = 3;
         int nY = 3;
-
-        //List<Point> points = null;
         int sum = 0;
         for (int i = 0; i < nY; ++i) {
             for (int j = 0; j < nX; ++j) {
@@ -28,51 +24,49 @@ public class CameraIntegrationTest {
     @Test
     public void cameraRaySphereIntegration() {
         Camera camera1 = new Camera(new Point(0,0,0), new Vector(0, 0, -1), new Vector(0, -1, 0));
+
         Camera camera2 = new Camera(new Point(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, -1, 0));
 
-        // TC01: Small Sphere 2 points
+        // TC01: Small Sphere
         countOfIntersections(camera1, new Sphere(1,new Point(0, 0, -3)), 2);
 
-        // TC02: Big Sphere 18 points
+        // TC02: Big Sphere
         countOfIntersections(camera2, new Sphere(2.5,new Point(0, 0, -2.5)), 18);
 
-        // TC03: Medium Sphere 10 points
+        // TC03: Medium Sphere
         countOfIntersections(camera2, new Sphere(2,new Point(0, 0, -2)), 10);
 
-        // TC04: Inside Sphere 9 points
+        // TC04: Inside Sphere
         countOfIntersections(camera2, new Sphere(4,new Point(0, 0, -1)), 9);
 
-        // TC05: Beyond Sphere 0 points
+        // TC05: Beyond Sphere
         countOfIntersections(camera1, new Sphere(0.5,new Point(0, 0, 1)), 0);
     }
     @Test
     public void cameraRayPlaneIntegration() {
         Camera cam = new Camera(new Point(0,0,0), new Vector(0, 0, -1), new Vector(0, -1, 0));
 
-        // TC01: Plane against camera 9 points
+        // TC01: Plane against camera
         countOfIntersections(cam, new Plane(new Point(0, 0, -3), new Vector(0, 0, 1)), 9);
 
-        // TC02: Plane with small angle 9 points
-        countOfIntersections(cam, new Plane(new Point(0, 0, -3), new Vector(2, -3, -1)), 9);
+        // TC02: Plane with small angle
+        countOfIntersections(cam, new Plane(new Point(-7, 0, -3), new Vector(-1, 4, 9)), 9);
 
-        // TC03: Plane parallel to lower rays 6 points
+        // TC03: Plane parallel to lower rays
         countOfIntersections(cam, new Plane(new Point(0, 0, -5), new Vector(0, 1, 1)), 6);
 
-        // TC04: Beyond Plane 0 points
-        countOfIntersections(cam, new Plane(new Point(0, 0, -5), new Vector(0, -1, 0)), 0);
+        // TC04: Beyond Plane
+        countOfIntersections(cam, new Plane(new Point(0, 0, 4), new Vector(-1,0 , 0)), 0);
     }
 
     @Test
     public void cameraRayTriangleIntegration() {
         Camera cam = new Camera(new Point(0,0,0), new Vector(0, 0, -1), new Vector(0, -1, 0));
 
-        // TC01: Small triangle 1 point
-        countOfIntersections(cam, new Triangle(new Point(-1, -1, -2),new Point(1, -1, -2), new Point(0, -1, -2)), 1);
+        // TC01: Small triangle
+        countOfIntersections(cam, new Triangle(new Point(1, -1, -2),new Point(-1, -1, -2), new Point(0, 1, -2)), 1);
 
-        // TC02: Medium triangle 2 points
+        // TC02: Medium triangle
         countOfIntersections(cam, new Triangle(new Point(1, -1, -2), new Point(-1, -1, -2), new Point(0, 20, -2)), 2);
     }
-
-
-
 }
