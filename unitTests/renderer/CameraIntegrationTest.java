@@ -4,9 +4,20 @@ import static org.junit.jupiter.api.Assertions.*;
 import geometries.*;
 import primitives.*;
 import java.util.List;
+/**
+ * This class contains integration tests for the Camera class, which tests the interaction between
+ * the camera and various geometry objects, including spheres, planes, and triangles.
+ */
 public class CameraIntegrationTest {
 
-    private void countOfIntersections(Camera cam, Intersectable geo , int amount){
+    /**
+     * Helper method that tests the number of intersections between a camera and a given intersectable object.
+     *
+     * @param cam    the camera to test
+     * @param geo    the intersectable object to test
+     * @param amount the expected number of intersections
+     */
+    private void countOfIntersections(Camera cam, Intersectable geo, int amount) {
         cam.setVPSize(3, 3);
         cam.setVPDistance(1);
         int nX = 3;
@@ -21,6 +32,9 @@ public class CameraIntegrationTest {
         assertEquals(amount, sum, "Wrong amount of intersections");
 
     }
+    /**
+     * Integration test for the interaction between a camera and a sphere.
+     */
     @Test
     public void cameraRaySphereIntegration() {
         Camera camera1 = new Camera(new Point(0,0,0), new Vector(0, 0, -1), new Vector(0, -1, 0));
@@ -42,6 +56,9 @@ public class CameraIntegrationTest {
         // TC05: Beyond Sphere
         countOfIntersections(camera1, new Sphere(0.5,new Point(0, 0, 1)), 0);
     }
+    /**
+     * Integration test for the interaction between a camera and a plane.
+     */
     @Test
     public void cameraRayPlaneIntegration() {
         Camera cam = new Camera(new Point(0,0,0), new Vector(0, 0, -1), new Vector(0, -1, 0));
@@ -59,6 +76,9 @@ public class CameraIntegrationTest {
         countOfIntersections(cam, new Plane(new Point(0, 0, 4), new Vector(-1,0 , 0)), 0);
     }
 
+    /**
+     * Integration test for the interaction between a camera and a triangle.
+     */
     @Test
     public void cameraRayTriangleIntegration() {
         Camera cam = new Camera(new Point(0,0,0), new Vector(0, 0, -1), new Vector(0, -1, 0));
@@ -69,4 +89,5 @@ public class CameraIntegrationTest {
         // TC02: Medium triangle
         countOfIntersections(cam, new Triangle(new Point(1, -1, -2), new Point(-1, -1, -2), new Point(0, 20, -2)), 2);
     }
+
 }
