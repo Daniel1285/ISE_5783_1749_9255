@@ -15,4 +15,9 @@ class RayTests {
 
         assertEquals(new Point(1,1,2),ray.getPoint(1),"should be p0 + t * v");
     }
+    @Test
+    void testFindClosestPoint() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: A point in the middle of the list is the one closest to the beginning of the foundation.
+    }
 }

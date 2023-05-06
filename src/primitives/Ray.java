@@ -1,5 +1,6 @@
 
 package primitives;
+import java.util.List;
 import java.util.Objects;
 import static  primitives.Util.*;
 /**
@@ -44,6 +45,17 @@ public class Ray {
         return dir;
     }
 
+    public Point getPoint(double delta) {
+        if (isZero(delta)) {
+            return p0;
+        }
+        return p0.add(dir.scale(delta));
+    }
+
+    public  Point findClosestPoint(List<Point> points){
+        return null;
+    }
+
     /**
      * Compares this Ray object to the specified object.
      * The result is true if and only if the argument is not null and is a Ray object that
@@ -59,12 +71,7 @@ public class Ray {
         return p0.equals(ray.p0) && dir.equals(ray.dir);
     }
 
-    public Point getPoint(double delta) {
-        if (isZero(delta)) {
-            return p0;
-        }
-        return p0.add(dir.scale(delta));
-    }
+
 
     /**
      * Computes and returns the hash code for this Ray object.
@@ -87,4 +94,6 @@ public class Ray {
                 "p0=" + p0 +
                 ", dir=" + dir;
     }
+
+
 }
