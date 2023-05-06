@@ -6,16 +6,49 @@ import primitives.Ray;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-public class Geometries implements Intersectable{
+/**
+
+ This class represents a collection of intersectable geometries.
+
+ It implements the Intersectable interface, allowing it to be used in intersection calculations with rays.
+ */
+public class Geometries implements Intersectable {
+
+    /**
+
+     A list of intersectable geometries that make up this collection.
+     */
     private List<Intersectable> intersectables;
-    public Geometries(){
+    /**
+
+     Constructs an empty collection of geometries.
+     */
+    public Geometries() {
         intersectables = new LinkedList<>();
     }
-    public Geometries(Intersectable... intersectable) {}
+    /**
+
+     Constructs a collection of geometries from an array of Intersectables.
+     @param intersectable An array of Intersectables to add to the collection.
+     */
+    public Geometries(Intersectable... intersectable) {
+        this();
+        add(intersectable);
+    }
+    /**
+
+     Adds an array of Intersectables to the collection.
+     @param intersectable An array of Intersectables to add to the collection.
+     */
     public void add(Intersectable... intersectable) {
         Collections.addAll(intersectables, intersectable);
     }
+    /**
 
+     Finds the intersections of a given Ray with the geometries in this collection.
+     @param ray The Ray to intersect with the geometries.
+     @return A list of Points representing the intersections with the geometries, or null if there are no intersections.
+     */
     @Override
     public List<Point> findIntersections(Ray ray) {
         List<Point> result = null;
@@ -30,5 +63,9 @@ public class Geometries implements Intersectable{
         }
         return result;
     }
-
 }
+
+
+
+
+
