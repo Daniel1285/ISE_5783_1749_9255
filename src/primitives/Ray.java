@@ -52,8 +52,18 @@ public class Ray {
         return p0.add(dir.scale(delta));
     }
 
-    public  Point findClosestPoint(List<Point> points){
-        return null;
+    public Point findClosestPoint(List<Point> points){
+
+        if(points.size() == 0){
+            return null;
+        }
+        Point closest = points.get(0);
+        for (Point item: points ) {
+            if(item.distanceSquared(p0) < closest.distanceSquared(p0)){
+                closest = item;
+            }
+        }
+        return closest;
     }
 
     /**
