@@ -22,7 +22,7 @@ public class Scene {
 
      The background color of the scene.
      */
-    public Color background;
+    public Color background = Color.BLACK;
     /**
 
      The ambient light of the scene.

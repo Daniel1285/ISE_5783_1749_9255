@@ -19,7 +19,7 @@ public class Triangle extends Polygon{
         super(p1, p2, p3);
     }
 
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point P0 = ray.getP0();
         Vector v = ray.getDir();
 
@@ -42,7 +42,8 @@ public class Triangle extends Polygon{
             return null;
 
         if ((s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0)){
-            return List.of(this.plane.findIntersections(ray).get(0));
+            Point p =  this.plane.findGeoIntersectionsHelper(ray).get(0).point;
+            return List.of(new GeoPoint(this, p));
         }
         return null;
     }

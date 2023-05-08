@@ -1,5 +1,5 @@
-
 package primitives;
+import geometries.Intersectable.GeoPoint;
 import java.util.List;
 import java.util.Objects;
 import static  primitives.Util.*;
@@ -62,15 +62,19 @@ public class Ray {
      @param points the list of Point objects to compare against the Line
      @return the Point object in the list closest to the Line, or null if the list is empty
      */
-    public Point findClosestPoint(List<Point> points){
+    public Point findClosestPoint(List<Point> points) {
+        return points == null || points.isEmpty() ? null
+                : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
+    }
 
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
         if(points.size() == 0){
             return null;
         }
-        Point closest = points.get(0);
-        for (Point item: points ) {
+        GeoPoint closest = points.get(0);
+        for (GeoPoint item: points ) {
             //Checks which distance is smaller and if smaller, switches between them
-            if(item.distanceSquared(p0) < closest.distanceSquared(p0)){
+            if(item.point.distanceSquared(p0) < closest.point.distanceSquared(p0)){
                 closest = item;
             }
         }

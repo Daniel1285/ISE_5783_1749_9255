@@ -11,7 +11,7 @@ import java.util.List;
 
  Represents a plane in 3D space.
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     /** The base point of the plane */
     final private Point p0;
 
@@ -72,7 +72,7 @@ public class Plane implements Geometry {
         return normal;
     }
 
-    public List<Point> findIntersections(Ray ray){
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
         Point P0 = ray.getP0();
         Vector v = ray.getDir();
         Vector n = normal;
@@ -99,7 +99,7 @@ public class Plane implements Geometry {
         if(t < 0 ){
             return null;
         }
-        return List.of(ray.getPoint(t));
+        return List.of(new GeoPoint(this, ray.getPoint(t)));
     }
 
 }

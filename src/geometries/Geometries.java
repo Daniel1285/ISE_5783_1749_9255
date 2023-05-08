@@ -12,7 +12,7 @@ import java.util.List;
 
  It implements the Intersectable interface, allowing it to be used in intersection calculations with rays.
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
 
     /**
 
@@ -50,10 +50,10 @@ public class Geometries implements Intersectable {
      @return A list of Points representing the intersections with the geometries, or null if there are no intersections.
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> result = null;
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> result = null;
         for (Intersectable item : intersectables) {
-            List<Point> itemList = item.findIntersections(ray);
+            List<GeoPoint> itemList = item.findGeoIntersectionsHelper(ray);
             if (itemList != null) {
                 if (result == null) {
                     result = new LinkedList<>();
