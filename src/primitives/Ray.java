@@ -45,13 +45,23 @@ public class Ray {
         return dir;
     }
 
+    /**
+     * Calculation function for a point on a beam
+     * @param delta It's actually the "t" in the formula P = P0 + t*v
+     * @return point
+     */
     public Point getPoint(double delta) {
         if (isZero(delta)) {
             return p0;
         }
         return p0.add(dir.scale(delta));
     }
+    /**
 
+     Finds the closest point in a list of points to the Line.
+     @param points the list of Point objects to compare against the Line
+     @return the Point object in the list closest to the Line, or null if the list is empty
+     */
     public Point findClosestPoint(List<Point> points){
 
         if(points.size() == 0){
@@ -59,6 +69,7 @@ public class Ray {
         }
         Point closest = points.get(0);
         for (Point item: points ) {
+            //Checks which distance is smaller and if smaller, switches between them
             if(item.distanceSquared(p0) < closest.distanceSquared(p0)){
                 closest = item;
             }

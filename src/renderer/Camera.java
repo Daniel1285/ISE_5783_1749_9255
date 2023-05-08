@@ -119,16 +119,32 @@ public class Camera {
     public double getHeight() {
         return height;
     }
+    /**
+
+     Sets the image writer for the camera.
+     @param imageWriter The image writer to set.
+     @return The camera instance.
+     */
     public Camera setImageWriter(ImageWriter imageWriter) {
         this.imageWriter = imageWriter;
         return this;
     }
+    /**
 
+     Sets the ray tracer for the camera.
+     @param rayTracer The ray tracer to set.
+     @return The camera instance.
+     */
     public Camera setRayTracer(RayTracerBase rayTracer) {
         this.rayTracer = rayTracer;
         return this;
     }
 
+    /**
+     For each pixel will be built
+     ray and for each ray we will get a color from the ray scanner using the castRay method. We put the color in a suitable pixel of a manufacturer
+     the image (writePixel)
+     */
     public void  renderImage(){
         try{
             if (imageWriter == null) {
@@ -147,6 +163,13 @@ public class Camera {
             throw new UnsupportedOperationException("Not implemented " + ex.getClass());
         }
     }
+    /**
+
+     Prints a grid of pixels to the image writer.
+     @param interval The interval between grid lines.
+     @param color The color of the grid lines.
+     @throws MissingResourceException if the image writer is null.
+     */
     public void printGrid(int interval,Color color){
         if(imageWriter == null){
             throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
@@ -159,12 +182,26 @@ public class Camera {
             }
         }
     }
+    /**
+
+     Writes the image to a file using the image writer.
+     @throws MissingResourceException if the image writer is null.
+     */
     public void writeToImage() {
         if(imageWriter == null){
             throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
         }
         imageWriter.writeToImage();
     }
+
+    /**
+     * Creates the foundation and summons the calculation
+     * Color the ray using the traceRay method of the rayTracer field, finally the method will return the color
+     * @param nX Represents the amount of columns (row width)
+     * @param nY Represents amount of rows (column height)
+     * @param column Represents the columns according to the resulting index
+     * @param row Represents the rows according to the resulting index
+     */
     private void castRay(int nX, int nY, int column, int row ) {
         Ray ray = constructRay(nX, nY, row, column);
         Color pixelColor = rayTracer.traceRay(ray);
