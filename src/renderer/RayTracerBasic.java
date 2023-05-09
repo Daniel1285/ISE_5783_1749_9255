@@ -1,10 +1,14 @@
 package renderer;
 import geometries.Intersectable.GeoPoint;
-import primitives.Color;
+import primitives.*;
 import primitives.Point;
 import primitives.Ray;
+import primitives.Vector;
 import scene.Scene;
 import java.util.*;
+import static primitives.Util.*;
+import lighting.*;
+
 /**
 
  This class is a basic implementation of a ray tracer for rendering images of 3D scenes.
@@ -35,7 +39,7 @@ public class RayTracerBasic extends RayTracerBase{
             return scene.background;
         }
         GeoPoint closest = ray.findClosestGeoPoint(pointList);
-        return calcColor(closest);
+        return calcColor(closest, ray);
     }
     /**
 
@@ -44,8 +48,41 @@ public class RayTracerBasic extends RayTracerBase{
      @param gp the Point at which to calculate the color
      @return the Color at the given Point
      */
-    private Color calcColor(GeoPoint gp){
-        return scene.ambientLight.getIntensity().add(gp.geometry.getEmission());
+    private Color calcColor(GeoPoint gp,Ray ray){
+        return scene.ambientLight.getIntensity().add(calcLocalEffects(gp,ray));
+    }
+    private Color calcLocalEffects(GeoPoint gp, Ray ray) {
+        Color color = gp.geometry.getEmission();
+        Vector v = ray.getDir();
+        Vector n = gp.geometry.getNormal(gp.point);
+        double nv = alignZero(n.dotProduct(v));
+        if (nv == 0)
+            return color;
+        Material mat = gp.geometry.getMaterial();
+        for (LightSource lightSource : scene.lights) {
+            Vector l = lightSource.getL(gp.point);
+            double nl = alignZero(n.dotProduct(l));
+            if (nl * nv > 0) { // sign(nl) == sing(nv)
+                Color iL = lightSource.getIntensity(gp.point);
+                color = color.add(calcDiffusive(mat.KD, nl,iL),
+                        calcSpecular(mat.KS, n, l, nl, v,mat.nShininess,iL));
+            }
+        }
+        return color;
+    }
+    private Color calcSpecular(Double3 kS, Vector n, Vector l, double nl,Vector v,int shininess,Color intensity) {
+        Vector r = l.add(n.scale(-2 * nl)); // nl must not be zero!
+        double VR = -alignZero(r.dotProduct(v));
+        if (VR <= 0)
+            return Color.BLACK; // view from direction opposite to r vector
+        Double3 amount =kS.scale(Math.pow(VR, shininess));
+        return intensity.scale(amount);
+    }
+
+    private Color calcDiffusive(Double3 kD, double nl,  Color intensity) {
+        double abs_nl = Math.abs(nl);
+        Double3 amount =kD.scale(abs_nl);
+        return intensity.scale(amount);
     }
 
 }

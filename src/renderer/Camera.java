@@ -145,7 +145,7 @@ public class Camera {
      ray and for each ray we will get a color from the ray scanner using the castRay method. We put the color in a suitable pixel of a manufacturer
      the image (writePixel)
      */
-    public void  renderImage(){
+    public Camera renderImage(){
         try{
             if (imageWriter == null) {
                 throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
@@ -162,6 +162,7 @@ public class Camera {
         catch (MissingResourceException ex){
             throw new UnsupportedOperationException("Not implemented " + ex.getClass());
         }
+        return this;
     }
     /**
 
