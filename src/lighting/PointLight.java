@@ -3,30 +3,67 @@ package lighting;
 import primitives.*;
 import primitives.Point;
 
-public class PointLight extends Light implements LightSource{
+/**
+ * The PointLight class represents a point light source in a scene.
+ * It extends the Light class and implements the LightSource interface.
+ */
+public class PointLight extends Light implements LightSource {
+
     private Point position;
     private double Kc = 1;
     private double Kl = 0;
     private double Kq = 0;
 
-    public PointLight(Color intensity,Point position){
+    /**
+     * Constructs a PointLight object with the specified intensity and position.
+     *
+     * @param intensity The color intensity of the light.
+     * @param position  The position of the light source.
+     */
+    public PointLight(Color intensity, Point position) {
         super(intensity);
         this.position = position;
     }
+
+    /**
+     * Sets the constant attenuation factor of the point light.
+     *
+     * @param kc The constant attenuation factor.
+     * @return The modified PointLight object.
+     */
     public PointLight setKc(double kc) {
         this.Kc = kc;
         return this;
     }
 
+    /**
+     * Sets the linear attenuation factor of the point light.
+     *
+     * @param kl The linear attenuation factor.
+     * @return The modified PointLight object.
+     */
     public PointLight setKl(double kl) {
         this.Kl = kl;
         return this;
     }
 
+    /**
+     * Sets the quadratic attenuation factor of the point light.
+     *
+     * @param kq The quadratic attenuation factor.
+     * @return The modified PointLight object.
+     */
     public PointLight setKq(double kq) {
         this.Kq = kq;
         return this;
     }
+
+    /**
+     * Returns the color intensity of the light at the given point.
+     *
+     * @param point The point in the scene.
+     * @return The color intensity of the light.
+     */
     @Override
     public Color getIntensity(Point point) {
         Color Ic = getIntensity();
@@ -36,12 +73,14 @@ public class PointLight extends Light implements LightSource{
         return Ic.reduce(factor);
     }
 
+    /**
+     * Returns the direction vector of the light at the given point.
+     *
+     * @param point The point in the scene.
+     * @return The direction vector of the light.
+     */
     @Override
     public Vector getL(Point point) {
         return point.subtract(position).normalize();
     }
-
-
-
-
 }

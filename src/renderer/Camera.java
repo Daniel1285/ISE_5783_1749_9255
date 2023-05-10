@@ -153,9 +153,11 @@ public class Camera {
             if (rayTracer == null) {
                 throw new MissingResourceException("missing resource", RayTracerBase.class.getName(), "");
             }
-            for (int i = 0; i < imageWriter.getNy(); i++) {
-                for (int j = 0; j < imageWriter.getNx()  ; j++) {
-                    castRay(imageWriter.getNx(),imageWriter.getNy(), i, j);
+            int Ny = imageWriter.getNy();
+            int Nx = imageWriter.getNx();
+            for (int i = 0; i < Ny; i++) {
+                for (int j = 0; j < Nx  ; j++) {
+                    castRay(Nx,Ny, i, j);
                 }
             }
         }

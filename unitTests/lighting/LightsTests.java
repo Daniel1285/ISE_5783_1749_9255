@@ -27,10 +27,10 @@ public class LightsTests {
            .setVPSize(200, 200).setVPDistance(1000);
 
    private static final int SHININESS = 301;
-   private static final double KD = 0.5;
+   private static final double KD = 0.4;
    private static final Double3 KD3 = new Double3(0.2, 0.6, 0.4);
 
-   private static final double KS = 0.5;
+   private static final double KS = 0.4;
    private static final Double3 KS3 = new Double3(0.2, 0.4, 0.3);
 
    private final Material material = new Material().setKd(KD3).setKs(KS3).setShininess(SHININESS);
@@ -54,6 +54,7 @@ public class LightsTests {
                    new Point(-75, 78, 100)
            };
    private final Point sphereLightPosition = new Point(-50, -50, 25);
+   private final Point sphereLightPosition1 = new Point(50, 40, 20);
    private final Point trianglesLightPosition = new Point(30, 10, -100);
    private final Vector trianglesLightDirection = new Vector(-2, -2, -2);
 
@@ -159,7 +160,7 @@ public class LightsTests {
    }
 
    /** Produce a picture of a sphere lighted by a narrow spotlight */
-   /*
+
    @Test
    public void sphereSpotSharp() {
       scene1.geometries.add(sphere);
@@ -172,10 +173,10 @@ public class LightsTests {
          .setRayTracer(new RayTracerBasic(scene1)) //
          .renderImage() //
          .writeToImage(); //
-   }*/
+   }
 
    /** Produce a picture of two triangles lighted by a narrow spotlight */
-   /*
+
    @Test
    public void trianglesSpotSharp() {
       scene2.geometries.add(triangle1, triangle2);
@@ -188,8 +189,40 @@ public class LightsTests {
          .renderImage() //
          .writeToImage(); //
    }
-
-}
-
+   /**
+    * Test method for rendering a scene with a sphere that the scene includes the three types of lighting .
     */
+   @Test
+   public void sphere() {
+      scene1.geometries.add(sphere);
+      scene1.lights.add(new PointLight(sphereLightColor, sphereLightPosition1)
+              .setKl(0.001).setKq(0.0004));
+      scene1.lights.add(new SpotLight(sphereLightColor, sphereLightPosition, new Vector(1, 1, -0.5))
+              .setKl(0.001).setKq(0.0004));
+      scene1.lights.add(new DirectionalLight(sphereLightColor, new Vector(1, -1, 0.5)));
+      ImageWriter imageWriter = new ImageWriter("lightSphere", 500, 500);
+      camera1.setImageWriter(imageWriter)
+              .setRayTracer(new RayTracerBasic(scene1))
+              .renderImage()
+              .writeToImage();
+   }
+   private final Point trianglesLightPosition1 = new Point(-70, -60, -80);
+
+   /**
+    * Test method for rendering a scene with triangles that the scene includes the three types of lighting.
+    */
+   @Test
+   public void triangle() {
+      scene2.geometries.add(triangle1, triangle2);
+      scene2.lights.add(new DirectionalLight(trianglesLightColor, trianglesLightDirection));
+      scene2.lights.add(new SpotLight(trianglesLightColor, trianglesLightPosition1, trianglesLightDirection)
+              .setKl(0.001).setKq(0.0001));
+      scene2.lights.add(new PointLight(trianglesLightColor, trianglesLightPosition)
+              .setKl(0.002).setKq(0.0003));
+      ImageWriter imageWriter = new ImageWriter("lightTriangle", 500, 500);
+      camera2.setImageWriter(imageWriter)
+              .setRayTracer(new RayTracerBasic(scene2))
+              .renderImage()
+              .writeToImage();
+   }
 }

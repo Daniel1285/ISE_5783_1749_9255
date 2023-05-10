@@ -58,28 +58,37 @@ public class Ray {
     }
     /**
 
-     Finds the closest point in a list of points to the Line.
-     @param points the list of Point objects to compare against the Line
-     @return the Point object in the list closest to the Line, or null if the list is empty
+     /**
+     * Finds the closest Point from a list of Points.
+     *
+     * @param points The list of Points.
+     * @return The closest Point, or null if the list is null or empty.
      */
     public Point findClosestPoint(List<Point> points) {
         return points == null || points.isEmpty() ? null
                 : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
     }
 
+    /**
+     * Finds the closest GeoPoint from a list of GeoPoints based on their distances from the reference point (p0).
+     *
+     * @param points The list of GeoPoints.
+     * @return The closest GeoPoint, or null if the list is empty.
+     */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> points) {
-        if(points.size() == 0){
+        if (points.size() == 0) {
             return null;
         }
         GeoPoint closest = points.get(0);
-        for (GeoPoint item: points ) {
-            //Checks which distance is smaller and if smaller, switches between them
-            if(item.point.distanceSquared(p0) < closest.point.distanceSquared(p0)){
+        for (GeoPoint item : points) {
+            // Checks which distance is smaller and if smaller, switches between them
+            if (item.point.distanceSquared(p0) < closest.point.distanceSquared(p0)) {
                 closest = item;
             }
         }
         return closest;
     }
+
 
     /**
      * Compares this Ray object to the specified object.

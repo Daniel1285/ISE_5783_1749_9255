@@ -9,6 +9,11 @@ import java.util.Objects;
  Interface representing an object that can be intersected by a Ray.
  */
 public abstract class Intersectable {
+   /**
+    * The GeoPoint class represents a point of intersection between a geometry and a ray.
+    * It contains references to the geometry object and the intersection point.
+    * This class is a nested static class within the Intersectable class.
+    */
    public static class GeoPoint {
       public Geometry geometry;
       public Point point;
@@ -17,6 +22,7 @@ public abstract class Intersectable {
          this.geometry = geometry;
          this.point = point;
       }
+
 
       @Override
       public boolean equals(Object o) {
@@ -41,18 +47,28 @@ public abstract class Intersectable {
    }
 
    /**
-
-    Finds and returns a List of all intersection points between this Intersectable object and a given Ray.
-    @param ray the Ray to intersect with this object
-    @return a List of all intersection points between this object and the given Ray
+    * Finds the intersections between the intersectable object and a given ray.
+    * Returns a list of intersection points.
+    *
+    * @param ray The ray to intersect with.
+    * @return A list of intersection points, or null if no intersections are found.
     */
    public List<Point> findIntersections(Ray ray) {
       var geoList = findGeoIntersections(ray);
       return geoList == null ? null : geoList.stream().map(gp -> gp.point).toList();
    }
+
+   /**
+    * Finds the intersections between the intersectable object and a given ray.
+    * Returns a list of GeoPoint objects representing the intersections.
+    *
+    * @param ray The ray to intersect with.
+    * @return A list of GeoPoint objects representing the intersections.
+    */
    public List<GeoPoint> findGeoIntersections(Ray ray) {
       return findGeoIntersectionsHelper(ray);
    }
+
    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
 
 }

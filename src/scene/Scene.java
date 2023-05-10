@@ -35,6 +35,10 @@ public class Scene {
      The geometries that compose the scene.
      */
     public Geometries geometries = new Geometries();
+
+    /**
+     * A list of light sources in the scene.
+     */
     public List<LightSource> lights = new LinkedList<>();
     /**
 
@@ -85,4 +89,15 @@ public class Scene {
         this.geometries = geometries;
         return this;
     }
+    /**
+     * Sets the list of light sources in the scene.
+     *
+     * @param lights The list of light sources to set.
+     * @return The updated Scene object.
+     */
+    public Scene setLights(List<LightSource> lights) {
+        this.lights = lights;
+        return this;
+    }
+
 }

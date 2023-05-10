@@ -10,7 +10,7 @@ import java.util.List;
 
  This class represents a collection of intersectable geometries.
 
- It implements the Intersectable interface, allowing it to be used in intersection calculations with rays.
+ It extends the Intersectable abstract class, allowing it to be used in intersection calculations with rays.
  */
 public class Geometries extends Intersectable {
 
@@ -47,12 +47,14 @@ public class Geometries extends Intersectable {
 
      Finds the intersections of a given Ray with the geometries in this collection.
      @param ray The Ray to intersect with the geometries.
-     @return A list of Points representing the intersections with the geometries, or null if there are no intersections.
+     @return A list of GeoPoints representing the intersections with the geometries and the geometry himself, or null if there are no intersections.
      */
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         List<GeoPoint> result = null;
         for (Intersectable item : intersectables) {
+            //Calls the findGeoIntersectionsHelper method on the current item
+            // to find the intersections between the ray and that item.
             List<GeoPoint> itemList = item.findGeoIntersectionsHelper(ray);
             if (itemList != null) {
                 if (result == null) {
