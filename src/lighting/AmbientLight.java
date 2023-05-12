@@ -21,5 +21,9 @@ public class AmbientLight extends Light {
     public AmbientLight(Color Ia, Double3 Ka) {
          super(Ia.scale(Ka));
     }
+    public AmbientLight(Color Ia, double Ka) {
+        super(Ia.scale(Ka));
+    }
+
 
 }

@@ -42,8 +42,9 @@ public class Triangle extends Polygon{
             return null;
 
         if ((s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0)){
-            Point p =  this.plane.findGeoIntersectionsHelper(ray).get(0).point;
-            return List.of(new GeoPoint(this, p));
+            var p =  this.plane.findGeoIntersectionsHelper(ray);
+            if(p != null)
+                return List.of(new GeoPoint(this, p.get(0).point));
         }
         return null;
     }
