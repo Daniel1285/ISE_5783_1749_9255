@@ -57,6 +57,9 @@ public abstract class Intersectable {
       var geoList = findGeoIntersections(ray);
       return geoList == null ? null : geoList.stream().map(gp -> gp.point).toList();
    }
+   public final List<GeoPoint> findGeoIntersections(Ray ray) {
+      return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+   }
 
    /**
     * Finds the intersections between the intersectable object and a given ray.
@@ -65,10 +68,17 @@ public abstract class Intersectable {
     * @param ray The ray to intersect with.
     * @return A list of GeoPoint objects representing the intersections.
     */
-   public List<GeoPoint> findGeoIntersections(Ray ray) {
-      return findGeoIntersectionsHelper(ray);
+   public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+      return findGeoIntersectionsHelper(ray, maxDistance);
    }
+   /**
+    * Finds the intersections between a ray and a collection of geographic points within a maximum distance.
+    *
+    * @param ray         The ray representing the starting point and direction of the intersection search.
+    * @param maxDistance The maximum distance within which to search for intersections.
+    * @return A list of geographic points that intersect with the ray within the specified maximum distance.
+    */
+   protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance);
 
-   protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
 
 }

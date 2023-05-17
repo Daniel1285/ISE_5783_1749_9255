@@ -50,12 +50,12 @@ public class Geometries extends Intersectable {
      @return A list of GeoPoints representing the intersections with the geometries and the geometry himself, or null if there are no intersections.
      */
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         List<GeoPoint> result = null;
         for (Intersectable item : intersectables) {
             //Calls the findGeoIntersectionsHelper method on the current item
             // to find the intersections between the ray and that item.
-            List<GeoPoint> itemList = item.findGeoIntersectionsHelper(ray);
+            List<GeoPoint> itemList = item.findGeoIntersectionsHelper(ray,maxDistance);
             if (itemList != null) {
                 if (result == null) {
                     result = new LinkedList<>();

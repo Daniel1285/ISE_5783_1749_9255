@@ -8,6 +8,7 @@ import static  primitives.Util.*;
  The Ray class represents a ray in 3D space, defined by a starting point (p0) and a direction (dir).
  */
 public class Ray {
+    private static final double DELTA = 0.1;
     private Point p0; // The starting point of the ray
     private Vector dir; // The direction of the ray
     /**
@@ -26,6 +27,28 @@ public class Ray {
             this.dir = dir;
         }
     }
+    /**
+     * Constructs a Ray object with the specified starting point, normal vector, and direction.
+     * The direction vector is normalized, and the starting point is adjusted slightly along the normal vector to avoid self-intersections.
+     *
+     * @param p   The starting point of the ray.
+     * @param n   The normal vector of the surface intersected by the ray.
+     * @param dir The direction vector of the ray.
+     */
+    public Ray(Point p, Vector n, Vector dir) {
+        this.dir = dir.normalize();
+
+        double nv = n.dotProduct(dir);
+        Vector delta = n.scale(DELTA);
+
+        // Adjust the starting point along the normal vector to avoid self-intersections
+        if (nv < 0) {
+            delta = delta.scale(-1);
+        }
+
+        p0 = p.add(delta);
+    }
+
 
     /**
      * Returns the starting point of the ray.
