@@ -106,9 +106,12 @@ public class Plane extends Geometry {
         // Calculate the dot product between the normal vector and the vector from the reference point to the starting point of the ray
         Vector P0_Q0 = p0.subtract(P0);
         double nP0Q0 = alignZero(n.dotProduct(P0_Q0));
-
+        if (isZero(nP0Q0)) {
+            return null;
+        }
         // Calculate the parameter t for the intersection point
         double t = alignZero(nP0Q0 / nv);
+
 
         // If t is negative or greater than the maximum distance, there are no intersections
         if (t < 0 || alignZero(t - maxDistance) > 0) {

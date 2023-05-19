@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3f1481a-1dfe-4521-8802-b827f5263425" name="Changes" comment="almost finish stage 7 we need to crate image with 3/4 element">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/geometries/Plane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/Plane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unitTests/renderer/ReflectionRefractionTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/renderer/ReflectionRefractionTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,31 +44,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Downloaded.Files.Path.Enabled": "true",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "last_opened_file_path": "C:/Users/נתי/IdeaProjects/ISE_5783_1749_9255/unitTests/renderer",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "fileTemplates",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/נתי/IdeaProjects/ISE_5783_1749_9255/unitTests/renderer&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;fileTemplates&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\נתי\IdeaProjects\ISE_5783_1749_9255\unitTests\renderer" />
@@ -89,7 +92,7 @@
       <recent name="geometries" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in ISE_5783_1749_9255">
+  <component name="RunManager" selected="JUnit.ReflectionRefractionTests.trianglesTra">
     <configuration name="All in ISE_5783_1749_9255" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE_5783_1749_9255" />
       <option name="PACKAGE_NAME" value="" />
@@ -98,7 +101,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReflectionRefractionTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CameraIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE_5783_1749_9255" />
       <extension name="coverage">
         <pattern>
@@ -107,13 +110,29 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="renderer" />
-      <option name="MAIN_CLASS_NAME" value="renderer.ReflectionRefractionTests" />
+      <option name="MAIN_CLASS_NAME" value="renderer.CameraIntegrationTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReflectionRefractionTests.twoSpheresOnMirrors" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CameraIntegrationTest.cameraRayPlaneIntegration" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ISE_5783_1749_9255" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="renderer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="renderer" />
+      <option name="MAIN_CLASS_NAME" value="renderer.CameraIntegrationTest" />
+      <option name="METHOD_NAME" value="cameraRayPlaneIntegration" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReflectionRefractionTests.trianglesTr" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE_5783_1749_9255" />
       <extension name="coverage">
         <pattern>
@@ -123,13 +142,13 @@
       </extension>
       <option name="PACKAGE_NAME" value="renderer" />
       <option name="MAIN_CLASS_NAME" value="renderer.ReflectionRefractionTests" />
-      <option name="METHOD_NAME" value="twoSpheresOnMirrors" />
+      <option name="METHOD_NAME" value="trianglesTr" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ShadowTests.sphereTriangleInitial" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ReflectionRefractionTests.trianglesTra" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE_5783_1749_9255" />
       <extension name="coverage">
         <pattern>
@@ -138,34 +157,20 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="renderer" />
-      <option name="MAIN_CLASS_NAME" value="renderer.ShadowTests" />
-      <option name="METHOD_NAME" value="sphereTriangleInitial" />
+      <option name="MAIN_CLASS_NAME" value="renderer.ReflectionRefractionTests" />
+      <option name="METHOD_NAME" value="trianglesTra" />
       <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="renderer in ISE_5783_1749_9255" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ISE_5783_1749_9255" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="renderer.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="renderer" />
-      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ReflectionRefractionTests.trianglesTra" />
+        <item itemvalue="JUnit.ReflectionRefractionTests.trianglesTr" />
         <item itemvalue="JUnit.All in ISE_5783_1749_9255" />
-        <item itemvalue="JUnit.ReflectionRefractionTests" />
-        <item itemvalue="JUnit.ReflectionRefractionTests.twoSpheresOnMirrors" />
-        <item itemvalue="JUnit.renderer in ISE_5783_1749_9255" />
-        <item itemvalue="JUnit.ShadowTests.sphereTriangleInitial" />
+        <item itemvalue="JUnit.CameraIntegrationTest.cameraRayPlaneIntegration" />
+        <item itemvalue="JUnit.CameraIntegrationTest" />
       </list>
     </recent_temporary>
   </component>
