@@ -115,27 +115,29 @@ public class ReflectionRefractionTests {
       scene.geometries.add( //
               new Triangle(new Point(-150, -150, -115), new Point(150, -150, -135),
                       new Point(75, 75, -150)) //
-                      .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60)), //
+                      .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60).setKR(1)), //
               new Triangle(new Point(-150, -150, -115), new Point(-70, 70, -140), new Point(75, 75, -150)) //
-                      .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60)), //
+                      .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60).setKR(1)), //
               new Sphere(20d, new Point(60, 50, -50)).setEmission(new Color(BLUE)) //
                       .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKT(0.6)),
               new Sphere(10d, new Point(60, 50, -50)).setEmission(new Color(RED)) //
-                      .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKR(0.5).setKT(0.6)),
+                      .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKR(0.1)),
               new Sphere(20d, new Point(-60, -60, -50)).setEmission(new Color(YELLOW)) //
                       .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKT(0.6)),
               new Sphere(20d, new Point(-60, 50, -50)).setEmission(new Color(RED)) //
-                      .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKT(0.6)),
-              new Sphere(5d, new Point(60, -50, -50)).setEmission(new Color(BLACK)) //
-                      .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKT(0.4)));
-      scene.lights.add(new DirectionalLight(new Color(800, 500, 250), new Vector(1, 0, 0)));
+                      .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKT(0.6)));
+              //new Sphere(5d, new Point(60, -50, -50)).setEmission(new Color(BLACK)) //
+                      //.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKT(0.4)));
+
+
+      scene.lights.add(new DirectionalLight(new Color(100, 100, 100), new Vector(-1, -1, -1)));
       scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point(60, 50, 0), new Vector(0, 0, -1)) //
-              .setKl(4E-5).setKq(2E-7));
+              .setKl(0.5).setKq(0.4));
       scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point(-60, -60, 0), new Vector(0, 0, -1)) //
-              .setKl(4E-5).setKq(2E-7));
+              .setKl(0.7).setKq(0.6));
       scene.lights.add(new SpotLight(new Color(200, 100, 400), new Point(-60, 50, 0), new Vector(0, 0, -1)) //
               .setKl(4E-5).setKq(2E-7));
-      scene.lights.add(new SpotLight(new Color(200, 100, 400), new Point(-600, -50, 0), new Vector(0, -0.5, -1)) //
+      scene.lights.add(new SpotLight(new Color(200, 100, 400), new Point(-60, -50, 0), new Vector(0, -0.5, -1)) //
               .setKl(4E-5).setKq(2E-7));
 
       ImageWriter imageWriter = new ImageWriter("refraction", 600, 600);

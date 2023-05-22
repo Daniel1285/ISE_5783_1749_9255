@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3f1481a-1dfe-4521-8802-b827f5263425" name="Changes" comment="almost finish stage 7 we need to crate image with 3/4 element">
+    <list default="true" id="d3f1481a-1dfe-4521-8802-b827f5263425" name="Changes" comment="update image in ref">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/Plane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/Plane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/RayTracerBasic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unitTests/renderer/ReflectionRefractionTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unitTests/renderer/ReflectionRefractionTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -185,6 +183,7 @@
       <workItem from="1682948904608" duration="521000" />
       <workItem from="1683130854838" duration="2020000" />
       <workItem from="1683537904409" duration="52928000" />
+      <workItem from="1684682615377" duration="5481000" />
     </task>
     <task id="LOCAL‎-00001" summary="hakol tov">
       <created>1682949297210</created>
@@ -270,7 +269,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1684322778719</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL‎-00013" summary="update image in ref">
+      <created>1684513026264</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL‎-00013" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1684513026264</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,7 +307,8 @@
     <MESSAGE value="finish stage 6 include doc and the two tests of the bonus (of the narrow beam)" />
     <MESSAGE value="final stage P7.1" />
     <MESSAGE value="almost finish stage 7 we need to crate image with 3/4 element" />
-    <option name="LAST_COMMIT_MESSAGE" value="almost finish stage 7 we need to crate image with 3/4 element" />
+    <MESSAGE value="update image in ref" />
+    <option name="LAST_COMMIT_MESSAGE" value="update image in ref" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
