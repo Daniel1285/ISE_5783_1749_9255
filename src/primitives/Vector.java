@@ -122,14 +122,8 @@ public class Vector extends Point {
     }
     public Vector rotateVector(Vector axis, double theta) {
 
-        //Use of Rodrigues' rotation formula
-        //https://en.wikipedia.org/wiki/Rodrigues%27_rotation_formula
-        //v: vector to rotate
-        //k: axis of rotation
-        //θ: angle of rotation
-        //Vrot = v * Cos θ + (k * v) * Sin θ + k(k,v) * (1 - Cos θ)
 
-        //Variables used in computing
+        //Vrot = v * Cos θ + (k * v) * Sin θ + k(k,v) * (1 - Cos θ)
         double x, y, z;
         double u, v, w;
         x = this.getXYZ().d1;
@@ -140,7 +134,7 @@ public class Vector extends Point {
         w = axis.xyz.d3;
         double v1 = u * x + v * y + w * z;
 
-        //Convert degrees to Rad
+        //Convert degrees to Radian
         double thetaRad = Math.toRadians(theta);
 
         //Calculate X's new coordinates
