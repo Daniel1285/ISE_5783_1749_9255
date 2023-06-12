@@ -3,8 +3,8 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
-import static primitives.Util.isZero;
+import java.util.List;
+import static primitives.Util.*;
 
 /**
 
@@ -56,4 +56,79 @@ public class Cylinder extends Tube {
         // Otherwise, delegate to the superclass to compute the normal vector
         return super.getNormal(point);
     }
+    @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        Vector vAxis = axisRay.getDir();
+        Vector v = ray.getDir();
+        Point p0 = ray.getP0();
+        double a = 0;
+        double b = 0;
+        double c = 0;
+
+        double vVa = alignZero(v.dotProduct(vAxis));
+        Vector vVaVa;
+        Vector vMinusVVaVa;
+        if (vVa == 0)
+            vMinusVVaVa = v;
+        else {
+            vVaVa = vAxis.scale(vVa);
+            try {
+                vMinusVVaVa = v.subtract(vVaVa);
+            } catch (IllegalArgumentException e1) {
+                return null;
+            }
+        }
+
+        a = vMinusVVaVa.lengthSquared();
+
+        Vector deltaP = null;
+        try {
+            deltaP = p0.subtract(axisRay.getP0());
+        } catch (IllegalArgumentException e1) {
+            if (vVa == 0 && alignZero(radius - maxDistance) <= 0) {
+                return List.of(new GeoPoint(this, ray.getPoint(radius)));
+            }
+            double t = alignZero(Math.sqrt(radius * radius / vMinusVVaVa.lengthSquared()));
+            return alignZero(t - maxDistance) >= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(t)));
+        }
+
+        double dPVAxis = alignZero(deltaP.dotProduct(vAxis));
+        Vector dPVaVa;
+        Vector dPMinusdPVaVa;
+        if (dPVAxis == 0)
+            dPMinusdPVaVa = deltaP;
+        else {
+            dPVaVa = vAxis.scale(dPVAxis);
+            try {
+                dPMinusdPVaVa = deltaP.subtract(dPVaVa);
+            } catch (IllegalArgumentException e1) {
+                double t = alignZero(Math.sqrt(radius * radius / a));
+                return alignZero(t - maxDistance) >= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(t)));
+            }
+        }
+
+        b = 2 * alignZero(vMinusVVaVa.dotProduct(dPMinusdPVaVa));
+        c = dPMinusdPVaVa.lengthSquared() - radius * radius;
+
+        // A*t^2 + B*t + C = 0 - lets resolve it
+        double discr = alignZero(b * b - 4 * a * c);
+        if (discr <= 0) return null;
+
+        double doubleA = 2 * a;
+        double tm = alignZero(-b / doubleA);
+        double th = Math.sqrt(discr) / doubleA;
+        if (isZero(th)) return null;
+
+        double t1 = alignZero(tm + th);
+        if (t1 <= 0)
+            return null;
+
+        double t2 = alignZero(tm - th);
+        if (t2 > 0 && alignZero(t2 - maxDistance) < 0)
+            return List.of(new GeoPoint(this, ray.getPoint(t1)),new GeoPoint(this, ray.getPoint(t2)));
+        else if (alignZero(t1 - maxDistance) < 0)// t2 is behind the head
+            return List.of(new GeoPoint(this, ray.getPoint(t1)));
+        return null;
+    }
+
 }

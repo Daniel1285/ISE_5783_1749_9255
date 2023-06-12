@@ -1,5 +1,7 @@
 package primitives;
 import geometries.Intersectable.GeoPoint;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import static  primitives.Util.*;
@@ -151,6 +153,25 @@ public class Ray {
                 "p0=" + p0 +
                 ", dir=" + dir;
     }
+    /**
+     * Creates a beam of rays from a target area to a specified point.
+     *
+     * @param points The list of points representing the target area.
+     * @param p The destination point.
+     * @return A list of rays originating from the points in the target area and pointing towards the destination point.
+     */
+    public static List<Ray> createBeamOfRaysFromTargetArea(List<Point> points, Point p) {
+        List<Ray> rays = new LinkedList<>(); // Create an empty list to store the rays.
+
+        // Iterate over each point in the list of points representing the target area.
+        for (Point point : points) {
+            // Create a new ray with the current point as the origin and a direction pointing towards the destination point.
+            rays.add(new Ray(point, p.subtract(point)));
+        }
+
+        return rays; // Return the list of rays.
+    }
+
 
 
 }

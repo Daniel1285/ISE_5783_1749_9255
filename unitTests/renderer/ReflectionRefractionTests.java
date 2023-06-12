@@ -1,15 +1,12 @@
-/**
- * 
- */
+
 package renderer;
 
 import static java.awt.Color.*;
 
+import geometries.*;
 import lighting.DirectionalLight;
 import org.junit.jupiter.api.Test;
 
-import geometries.Sphere;
-import geometries.Triangle;
 import lighting.AmbientLight;
 import lighting.SpotLight;
 import primitives.*;
@@ -126,11 +123,7 @@ public class ReflectionRefractionTests {
                       .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKT(0.6)),
               new Sphere(20d, new Point(-60, 50, -50)).setEmission(new Color(RED)) //
                       .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKT(0.6)));
-              //new Sphere(5d, new Point(60, -50, -50)).setEmission(new Color(BLACK)) //
-                      //.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKT(0.4)));
-
-
-      scene.lights.add(new DirectionalLight(new Color(100, 100, 100), new Vector(-1, -1, -1)));
+      scene.lights.add(new DirectionalLight(new Color(100, 100, 100), new Vector(0, 0, -1)));
       scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point(60, 50, 0), new Vector(0, 0, -1)) //
               .setKl(0.5).setKq(0.4));
       scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point(-60, -60, 0), new Vector(0, 0, -1)) //
@@ -139,12 +132,10 @@ public class ReflectionRefractionTests {
               .setKl(4E-5).setKq(2E-7));
       scene.lights.add(new SpotLight(new Color(200, 100, 400), new Point(-60, -50, 0), new Vector(0, -0.5, -1)) //
               .setKl(4E-5).setKq(2E-7));
-
       ImageWriter imageWriter = new ImageWriter("refraction", 600, 600);
       camera.setImageWriter(imageWriter) //
               .setRayTracer(new RayTracerBasic(scene)) //
               .renderImage() //
               .writeToImage();
    }
-
 }

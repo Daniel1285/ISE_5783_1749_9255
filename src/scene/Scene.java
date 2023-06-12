@@ -34,7 +34,7 @@ public class Scene {
 
      The geometries that compose the scene.
      */
-    public Geometries geometries = new Geometries();
+    public Geometries geometries = new Geometries();;
 
     /**
      * A list of light sources in the scene.
@@ -47,7 +47,6 @@ public class Scene {
      */
     public Scene(String name) {
         this.name = name;
-        geometries = new Geometries();
     }
     /**
 

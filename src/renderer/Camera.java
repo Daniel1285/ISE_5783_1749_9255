@@ -24,7 +24,24 @@ public class Camera {
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
 
+    // number of rays to be used per pixel width or height.
+    private double superSampling = 0;
 
+    //The radius of the target area.
+    private double aperture = 0;
+
+    //Distance between the view plane to focal plane.
+    private double focalLength = 0;
+
+    public Camera setSuperSampling(int density) {
+        this.superSampling = density;
+        return this;
+    }
+    public Camera setDepthOfField(double aperture, double distance) {
+        this.aperture = aperture;
+        this.focalLength = distance;
+        return this;
+    }
     /**
      * Constructs a new Camera object with the given position, direction, and up vector.
      * The direction and up vectors must be orthogonal.
@@ -141,31 +158,50 @@ public class Camera {
     }
 
     /**
-     For each pixel will be built
-     ray and for each ray we will get a color from the ray scanner using the castRay method. We put the color in a suitable pixel of a manufacturer
-     the image (writePixel)
+     * Renders the image by casting rays or beam rays based on the superSampling setting.
+     *
+     * @return The camera itself - for chaining.
+     * @throws UnsupportedOperationException If required resources (ImageWriter or RayTracer) are missing.
      */
-    public Camera renderImage(){
-        try{
+    public Camera renderImage() {
+        try {
+            int Ny = imageWriter.getNy(); // Get the number of rows in the image.
+            int Nx = imageWriter.getNx(); // Get the number of columns in the image.
+
+            // Check if the ImageWriter is null. If so, throw a MissingResourceException.
             if (imageWriter == null) {
                 throw new MissingResourceException("missing resource", ImageWriter.class.getName(), "");
             }
+
+            // Check if the RayTracer is null. If so, throw a MissingResourceException.
             if (rayTracer == null) {
                 throw new MissingResourceException("missing resource", RayTracerBase.class.getName(), "");
             }
-            int Ny = imageWriter.getNy();
-            int Nx = imageWriter.getNx();
-            for (int i = 0; i < Ny; i++) {
-                for (int j = 0; j < Nx  ; j++) {
-                    castRay(Nx,Ny, i, j);
+
+            // Check if superSampling is disabled (superSampling = 0). If so, cast a single ray for each pixel.
+            if (superSampling == 0) {
+                for (int i = 0; i < Ny; i++) {
+                    for (int j = 0; j < Nx; j++) {
+                        castRay(Nx, Ny, i, j);
+                    }
                 }
             }
-        }
-        catch (MissingResourceException ex){
+            // If superSampling is enabled, cast a beam ray for each pixel using points within the target area.
+            else {
+                List<Point> points = Point.pointsInTheTargetArea(p0, vUp, vRight, superSampling, aperture);
+                for (int i = 0; i < Ny; i++) {
+                    for (int j = 0; j < Nx; j++) {
+                        castBeamRay(Nx, Ny, i, j, points);
+                    }
+                }
+            }
+        } catch (MissingResourceException ex) {
             throw new UnsupportedOperationException("Not implemented " + ex.getClass());
         }
-        return this;
+
+        return this; // Return the camera itself to support method chaining.
     }
+
     /**
 
      Prints a grid of pixels to the image writer.
@@ -205,12 +241,71 @@ public class Camera {
      * @param column Represents the columns according to the resulting index
      * @param row Represents the rows according to the resulting index
      */
-    private void castRay(int nX, int nY, int column, int row ) {
+    private void castRay(int nX, int nY, int column, int row) {
         Ray ray = constructRay(nX, nY, row, column);
         Color pixelColor = rayTracer.traceRay(ray);
         imageWriter.writePixel(row, column, pixelColor);
     }
+    /**
+     * Casts a beam ray from a specified position and traces it to generate a color for a specific pixel in the image.
+     *
+     * @param nX      The number of columns in the image.
+     * @param nY      The number of rows in the image.
+     * @param column  The column index of the pixel.
+     * @param row     The row index of the pixel.
+     * @param points  The list of points representing the target area.
+     */
+    private void castBeamRay(int nX, int nY, int column, int row, List<Point> points) {
+        // Construct the ray originating from the specified position (nX, nY) and passing through the current pixel (row, column).
+        Ray ray = constructRay(nX, nY, row, column);
 
+        // Calculate the point of intersection between the constructed ray and the focal plane using the specified focal length.
+        Point point = ray.getPoint(focalLength);
+
+        // Trace multiple rays from the target area towards the calculated intersection point and obtain the average color.
+        Color color = rayTracer.traceMultipleRays(Ray.createBeamOfRaysFromTargetArea(points, point));
+
+        // Write the obtained color to the specified pixel in the image.
+        imageWriter.writePixel(row, column, color);
+    }
+
+    /**
+     * Rotates the camera around a specified axis by a given angle.
+     *
+     * @param axis  The axis of rotation.
+     * @param theta The angle of rotation in radians.
+     * @return The camera itself - for chaining.
+     */
+    public Camera rotateCamera(Vector axis, double theta) {
+        if (theta == 0) return this; // If the angle of rotation is zero, no rotation is performed, so return the camera itself.
+
+        // Rotate the vUp, vRight, and vTo vectors of the camera around the specified axis by the given angle.
+        vUp = vUp.rotateVector(axis, theta);
+        vRight = vRight.rotateVector(axis, theta);
+        vTo = vTo.rotateVector(axis, theta);
+
+        return this; // Return the camera itself to support method chaining.
+    }
+
+
+    /**
+     * Moves the camera position by a specified vector.
+     *
+     * @param move The vector representing the movement direction and distance.
+     * @return The camera itself - for chaining.
+     */
+    public Camera moveCamera(Vector move) {
+        // Create a new Point object representing the current camera position.
+        Point myPoint = new Point(p0.getXYZ());
+
+        // Add the movement vector to the current camera position to obtain the new camera position.
+        myPoint = myPoint.add(move);
+
+        // Update the camera's p0 (position) to the new camera position.
+        p0 = myPoint;
+
+        return this; // Return the camera itself to support method chaining.
+    }
 
 
 

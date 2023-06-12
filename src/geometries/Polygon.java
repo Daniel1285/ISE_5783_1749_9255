@@ -1,6 +1,6 @@
 package geometries;
 
-import static primitives.Util.isZero;
+import static primitives.Util.*;
 
 import java.util.List;
 
@@ -82,7 +82,8 @@ public class Polygon extends Geometry {
             // Test the consequent edges have
             edge1 = edge2;
             edge2 = vertices[i].subtract(vertices[i - 1]);
-            if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
+            boolean JJ = (edge1.crossProduct(edge2).dotProduct(n) > 0);
+            if (positive != JJ )
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
     }
@@ -92,7 +93,46 @@ public class Polygon extends Geometry {
         return plane.getNormal();
     }
 
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance){return null;}
+    @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
+        List<GeoPoint> planeIntersections = plane.findGeoIntersections(ray);
 
+        if (planeIntersections == null) {
+            return null;
+        }
+
+        Point P0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        Point P1 = vertices.get(1);
+        Point P2 = vertices.get(0);
+
+        Vector v1 = P0.subtract(P1);
+        Vector v2 = P0.subtract(P2);
+
+        double sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+
+        if (isZero(sign)) {
+            return null;
+        }
+
+        boolean positive = sign > 0;
+        for (int i = vertices.size() - 1; i > 0; --i) {
+            v1 = v2;
+            v2 = P0.subtract(vertices.get(i));
+
+            sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+            if (isZero(sign)) {
+                return null;
+            }
+
+            if (positive != (sign > 0)) {
+                return null;
+            }
+        }
+        Point point = planeIntersections.get(0).point;
+
+        return List.of(new GeoPoint(this,point));
+    }
 }
 

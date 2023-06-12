@@ -246,12 +246,12 @@ public class RayTracerBasic extends RayTracerBase {
         Double3 kr = material.KR, kkr = k.product(kr);
         Ray reflectedRay = constructReflectedRay(gp.point,v,n);
         if (!kkr.lowerThan(MIN_CALC_COLOR_K)) {
-            color = color.add(calcGlobalEffect(reflectedRay, level - 1, kr, kkr)).scale(kr);
+            color = color.add(calcGlobalEffect(reflectedRay, level , kr, kkr)).scale(kr);
         }
-        Double3 kt = material.KT, kkt = k .product(kt);
+        Double3 kt = material.KT, kkt = k.product(kt);
         Ray refractedRay = constructRefractedRay(gp.point,v,n);
         if (!kkt.lowerThan(MIN_CALC_COLOR_K)) {
-            color = color.add(calcGlobalEffect(refractedRay, level - 1, kt, kkt)).scale(kt);
+            color = color.add(calcGlobalEffect(refractedRay, level , kt, kkt)).scale(kt);
         }
         return color;
     }
