@@ -1,6 +1,8 @@
 package renderer;
 import primitives.Color;
+import primitives.Point;
 import primitives.Ray;
+import primitives.Vector;
 import scene.Scene;
 
 import java.util.List;
@@ -29,7 +31,6 @@ public abstract class RayTracerBase {
      * @return The color of the traced ray.
      */
     public abstract Color traceRay(Ray ray);
-
     /**
      * Traces multiple rays and returns the average color.
      *
@@ -43,7 +44,7 @@ public abstract class RayTracerBase {
         // Iterate over each ray in the list of rays.
         for (Ray ray : rays) {
             // Trace the current ray and add the resulting color to the average color scaled by 1.0 / size.
-            avgColor = avgColor.add(traceRay(ray).scale(1.0 / size));
+            avgColor = avgColor.add(traceRay(ray).reduce(size));
         }
 
         return avgColor; // Return the average color of the traced rays.

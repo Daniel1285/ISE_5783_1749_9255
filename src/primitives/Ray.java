@@ -162,7 +162,6 @@ public class Ray {
      */
     public static List<Ray> createBeamOfRaysFromTargetArea(List<Point> points, Point p) {
         List<Ray> rays = new LinkedList<>(); // Create an empty list to store the rays.
-
         // Iterate over each point in the list of points representing the target area.
         for (Point point : points) {
             // Create a new ray with the current point as the origin and a direction pointing towards the destination point.

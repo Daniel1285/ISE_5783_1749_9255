@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 
@@ -148,38 +149,51 @@ public class Point {
     }
     private static Random rnd = new Random();
     /**
-     * Generates a list of points within a target area.
+     * Generates a list of points within the target area for super sampling.
      *
-     * @param p0 The initial point.
-     * @param up The up vector.
-     * @param right The right vector.
-     * @param superSampling The super-sampling factor.
-     * @param radius The radius of the target area.
-     * @return A list of points within the target area.
+     * @param p0            The center point of the target area.
+     * @param up            The up vector defining the target area plane.
+     * @param right         The right vector defining the target area plane.
+     * @param superSampling The density of points per unit distance.
+     * @param radius        The radius of the target area.
+     * @return The list of points within the target area.
      */
     public static List<Point> pointsInTheTargetArea(Point p0, Vector up, Vector right, double superSampling, double radius) {
-        List<Point> pointsInTarget = new LinkedList<>(); // Create an empty list to store points within the target area.
-
-        // Iterate over the i and j values within the range of -radius to radius, with a step size of radius/superSampling.
-        for (double i = -radius; i < radius; i += radius / superSampling) {
-            for (double j = -radius; j < radius; j += radius / superSampling) {
-                double jitRed = rnd.nextDouble(-0.1, 0.1); // Generate a random value between -0.1 and 0.1.
-
-                // Check if neither i nor j is zero.
-                if (!isZero(i) && !isZero(j)) {
-                    // Calculate the point p by adding the scaled up vector, scaled right vector,
-                    // and a random jitter to the right vector.
-                    Point p = p0.add(up.scale(i).add(right.scale(j + jitRed)));
-
-                    // Check if the distance between p0 and p is less than or equal to the radius.
-                    if (p0.distance(p) <= radius) {
-                        pointsInTarget.add(p); // Add the point to the list of points within the target area.
-                    }
-                }
+        List<Point> pointsInTarget = new LinkedList<>();
+        // Calculate the distance between adjacent points based on the superSampling density and the target area radius.
+        double dX = alignZero(2 * radius / superSampling);
+        // Iterate over rows and columns to generate points within the target area.
+        for (int row = 1; row < superSampling; row++) {
+            for (int col = 1; col < superSampling; col++) {
+                // Calculate the position of the current point within the target area.
+                Point p = p0.add(up.scale(dX * row)).add(right.scale(dX * col));
+                // Add the point to the list of points within the target area.
+                pointsInTarget.add(p);
             }
         }
-
         return pointsInTarget; // Return the list of points within the target area.
     }
+
+        //List<Point> pointsInTarget = new LinkedList<>(); // Create an empty list to store points within the target area.
+
+        // Iterate over the i and j values within the range of -radius to radius, with a step size of radius/superSampling.
+//        double y = -radius;
+//        double xStart = -radius;
+//        double dY = radius/superSampling;
+//        double dX = radius/superSampling;
+//        for (int row = 0; row <= superSampling; row++, y += dY) {
+//            double x = xStart;
+//            for (int col = 0; col <= superSampling; col++, x += dX) {
+//                double jitRed = rnd.nextDouble(-0.1, 0.1);
+//                if (!isZero(x) && !isZero(y)) {
+//                    // Calculate the point p by adding the scaled up vector, scaled right vector,
+//                    // and a random jitter to the right vector.
+//                    Point p = p0.add(up.scale(y).add(right.scale(x)));
+//                    //if(p0.distance(p) < radius)
+//                    pointsInTarget.add(p);
+//                }
+//            }
+//        }
+
 
 }

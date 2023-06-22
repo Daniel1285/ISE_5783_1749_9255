@@ -9,6 +9,13 @@ import static primitives.Util.*;
  * It extends the Polygon class, which is a collection of connected vertices.
  */
 public class Triangle extends Polygon {
+    @Override
+    public String toString() {
+        return "Triangle{" +
+                "vertices=" + vertices +
+                '}';
+    }
+
     /**
      * Constructs a Triangle object with the given three vertices.
      *

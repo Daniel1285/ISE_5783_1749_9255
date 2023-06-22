@@ -25,13 +25,24 @@ public class Camera {
     private RayTracerBase rayTracer;
 
     // number of rays to be used per pixel width or height.
-    private double superSampling = 0;
+    private int superSampling = 0;
 
     //The radius of the target area.
     private double aperture = 0;
 
     //Distance between the view plane to focal plane.
     private double focalLength = 0;
+    private int threadsCount =1; //number of rays to the superSampling
+    private boolean adaptive = false;
+    private final int maxLevelAdaptiveSS = 3;
+    public Camera setMultiThreading(int threadsCount) {
+        this.threadsCount = threadsCount;
+        return this;
+    }
+    public Camera setAdaptive(boolean adaptive) {
+        this.adaptive = adaptive;
+        return this;
+    }
 
     public Camera setSuperSampling(int density) {
         this.superSampling = density;
@@ -177,22 +188,36 @@ public class Camera {
             if (rayTracer == null) {
                 throw new MissingResourceException("missing resource", RayTracerBase.class.getName(), "");
             }
-
+            Pixel.initialize(imageWriter.getNy(), imageWriter.getNx(), 1);
             // Check if superSampling is disabled (superSampling = 0). If so, cast a single ray for each pixel.
             if (superSampling == 0) {
-                for (int i = 0; i < Ny; i++) {
-                    for (int j = 0; j < Nx; j++) {
-                        castRay(Nx, Ny, i, j);
-                    }
+                while (threadsCount-- > 0) {
+                    new Thread(() -> {
+                        for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
+                            imageWriter.writePixel(pixel.row, pixel.col, castRay(Nx, Ny, pixel.col, pixel.row));
+                    }).start();
                 }
+                Pixel.waitToFinish();
             }
-            // If superSampling is enabled, cast a beam ray for each pixel using points within the target area.
             else {
-                List<Point> points = Point.pointsInTheTargetArea(p0, vUp, vRight, superSampling, aperture);
-                for (int i = 0; i < Ny; i++) {
-                    for (int j = 0; j < Nx; j++) {
-                        castBeamRay(Nx, Ny, i, j, points);
+                if (!adaptive) {
+                    List<Point> points = Point.pointsInTheTargetArea(p0, vUp, vRight, superSampling, aperture);
+                    while (threadsCount-- > 0) {
+                        new Thread(() -> {
+                            for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
+                                 imageWriter.writePixel(pixel.row, pixel.col, castBeamRay(Nx, Ny, pixel.col, pixel.row, points));
+                        }).start();
                     }
+                    Pixel.waitToFinish();
+                }
+                else{
+                    while (threadsCount-- > 0) {
+                        new Thread(() -> {
+                            for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
+                                imageWriter.writePixel(pixel.row, pixel.col, AdaptiveSuperSampling(pixel.col, pixel.row));
+                        }).start();
+                    }
+                    Pixel.waitToFinish();
                 }
             }
         } catch (MissingResourceException ex) {
@@ -241,10 +266,10 @@ public class Camera {
      * @param column Represents the columns according to the resulting index
      * @param row Represents the rows according to the resulting index
      */
-    private void castRay(int nX, int nY, int column, int row) {
+    private Color castRay(int nX, int nY, int column, int row) {
         Ray ray = constructRay(nX, nY, row, column);
         Color pixelColor = rayTracer.traceRay(ray);
-        imageWriter.writePixel(row, column, pixelColor);
+        return pixelColor;
     }
     /**
      * Casts a beam ray from a specified position and traces it to generate a color for a specific pixel in the image.
@@ -255,7 +280,7 @@ public class Camera {
      * @param row     The row index of the pixel.
      * @param points  The list of points representing the target area.
      */
-    private void castBeamRay(int nX, int nY, int column, int row, List<Point> points) {
+    private Color castBeamRay(int nX, int nY, int column, int row, List<Point> points) {
         // Construct the ray originating from the specified position (nX, nY) and passing through the current pixel (row, column).
         Ray ray = constructRay(nX, nY, row, column);
 
@@ -264,9 +289,7 @@ public class Camera {
 
         // Trace multiple rays from the target area towards the calculated intersection point and obtain the average color.
         Color color = rayTracer.traceMultipleRays(Ray.createBeamOfRaysFromTargetArea(points, point));
-
-        // Write the obtained color to the specified pixel in the image.
-        imageWriter.writePixel(row, column, color);
+        return color;
     }
 
     /**
@@ -306,8 +329,66 @@ public class Camera {
 
         return this; // Return the camera itself to support method chaining.
     }
+    /**
+     * Performs adaptive super sampling at pixel (i, j) to improve image quality.
+     *
+     * @param i The column index of the pixel.
+     * @param j The row index of the pixel.
+     * @return The color obtained after adaptive super sampling.
+     */
+    private Color AdaptiveSuperSampling(int i, int j) {
+        // Construct the center ray for the pixel at (i, j).
+        Ray center = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
 
+        // Trace the center ray to obtain the center color.
+        Color centerColor = rayTracer.traceRay(center);
 
+        // Perform adaptive super sampling using the center color.
+        return calcAdaptiveSuperSampling(imageWriter.getNx(), imageWriter.getNy(), j, i, maxLevelAdaptiveSS, centerColor);
+    }
+
+    /**
+     * Performs recursive adaptive super sampling to improve image quality.
+     *
+     * @param nX          The total number of columns in the image.
+     * @param nY          The total number of rows in the image.
+     * @param j           The column index of the current pixel.
+     * @param i           The row index of the current pixel.
+     * @param maxLevel    The maximum recursion level for adaptive super sampling.
+     * @param centerColor The color of the center pixel.
+     * @return The color obtained after adaptive super sampling.
+     */
+    private Color calcAdaptiveSuperSampling(int nX, int nY, int j, int i, int maxLevel, Color centerColor) {
+        // Base case: if maxLevel is less than or equal to 0, return the center color.
+        if (maxLevel <= 0) {
+            return centerColor;
+        }
+
+        Color color = centerColor;
+        List<Ray> beam = new LinkedList<>();
+
+        // Construct the beam rays for the current pixel.
+        beam.add(constructRay(2 * nX, 2 * nY, 2 * j, 2 * i));
+        beam.add(constructRay(2 * nX, 2 * nY, 2 * j, 2 * i + 1));
+        beam.add(constructRay(2 * nX, 2 * nY, 2 * j + 1, 2 * i));
+        beam.add(constructRay(2 * nX, 2 * nY, 2 * j + 1, 2 * i + 1));
+
+        // Iterate over the beam rays and perform adaptive super sampling recursively.
+        for (int ray = 0; ray < 4; ray++) {
+            Color currentColor = rayTracer.traceRay(beam.get(ray));
+
+            // Check if the current color is different from the center color.
+            if (!currentColor.equals(centerColor)) {
+                currentColor = calcAdaptiveSuperSampling(2 * nX, 2 * nY, 2 * j + ray / 2, 2 * i + ray % 2, (maxLevel - 1), currentColor);
+            }
+
+            // Accumulate the color obtained from the recursive call.
+            color = color.add(currentColor);
+        }
+
+        // Reduce the accumulated color by dividing it by 5.
+        return color.reduce(5);
+    }
 
 }
 
